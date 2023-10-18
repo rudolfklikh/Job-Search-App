@@ -1,0 +1,19 @@
+.app-input {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid rgba($color: #000000, $alpha: .25);
+    height: 36px;
+    line-height: 18px;
+    padding: 0 15px;
+    outline: none;
+
+    &:focus {
+        border: 1px solid $primary-dark;
+    }
+
+    &:disabled {
+        background: rgba($color: #000000, $alpha: .05);
+        border: 1px solid rgba($color: #000000, $alpha: .15);
+        color: rgba($color: #000000, $alpha: .38);
+    }
+}
