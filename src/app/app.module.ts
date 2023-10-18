@@ -8,10 +8,12 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from './environments/environment';
+import { HeaderComponent } from './components';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +21,7 @@ import { environment } from './environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireStorageModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
