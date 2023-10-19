@@ -1,0 +1,9 @@
+@import '../../../styles/colors.scss';
+
+
+// For External Classes ( If parrent component has class -> )
+:host-context(.form-field_error) {
+    input {
+        border: 1px solid $error;
+    }
+}
