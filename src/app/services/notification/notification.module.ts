@@ -1,0 +1,23 @@
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { NotificationService } from './notification.service';
+import { NotificationComponent } from './components';
+
+
+
+@NgModule({ 
+  declarations: [],
+  imports: [ CommonModule, MatSnackBarModule ,NotificationComponent ]
+})
+export class NotificationModule {
+    static forRoot(): ModuleWithProviders<NotificationModule> {
+      return {
+        ngModule: NotificationModule,
+        providers: [
+          NotificationService
+        ]
+      }
+    }
+ }

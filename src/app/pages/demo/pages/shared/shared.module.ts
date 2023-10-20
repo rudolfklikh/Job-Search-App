@@ -6,13 +6,21 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { SharedComponent } from './shared.component';
 
 import { ButtonComponent } from '@app/shared/buttons';
-import { FormFieldComponent, InputComponent, PasswordComponent, SelectComponent } from '@app/shared/controls';
-
+import {
+  AutocompleteComponent,
+  CheckboxesComponent,
+  DateComponent,
+  DateRangeComponent,
+  FormFieldComponent,
+  InputComponent,
+  PasswordComponent,
+  RadiosComponent,
+  SelectComponent,
+} from '@app/shared/controls';
+import { SpinnerComponent } from '@app/shared/indicators';
 
 @NgModule({
-  declarations: [
-    SharedComponent
-  ],
+  declarations: [SharedComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -22,6 +30,12 @@ import { FormFieldComponent, InputComponent, PasswordComponent, SelectComponent 
     InputComponent,
     PasswordComponent,
     SelectComponent,
-  ]
+    CheckboxesComponent,
+    RadiosComponent,
+    DateComponent,
+    DateRangeComponent,
+    AutocompleteComponent,
+    SpinnerComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

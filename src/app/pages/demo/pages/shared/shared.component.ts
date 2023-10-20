@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ControlItem } from '@app/models/frontend';
-import { regex, regexErrors } from '@app/shared/utils';
+import { NotificationService } from '@app/services';
+import { markFormGroupTouched, regex, regexErrors } from '@app/shared/utils';
 
 @Component({
   selector: 'app-shared',
@@ -12,6 +13,7 @@ export class SharedComponent implements OnInit {
   form!: FormGroup;
   isInline = true;
   emailPatternError = regexErrors.email;
+  showSpinner = false;
 
   items: ControlItem[] = [
     {
@@ -36,7 +38,7 @@ export class SharedComponent implements OnInit {
     },
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private notification: NotificationService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -65,16 +67,82 @@ export class SharedComponent implements OnInit {
           validators: [Validators.required],
         },
       ],
+      autocomplete: [
+        null,
+        {
+          updateOn: 'change',
+          validators: [Validators.required],
+        },
+      ],
+      checkboxes: [
+        null,
+        {
+          updateOn: 'change',
+          validators: [Validators.required],
+        },
+      ],
+      radios: [
+        null,
+        {
+          updateOn: 'change',
+          validators: [Validators.required],
+        },
+      ],
+      date: [
+        null,
+        {
+          updateOn: 'change',
+          validators: [Validators.required],
+        },
+      ],
+      dateRange: [
+        null,
+        {
+          updateOn: 'change',
+          validators: [Validators.required],
+        },
+      ],
     });
   }
 
-  onPatchValue() {
-    this.form.patchValue({ input: 'test' });
+  onPatchValue(): void {
+    this.form.patchValue({
+      input: 'ff@gmail.com',
+      password: 'qwerty',
+      autocomplete: 1,
+      select: 2,
+      checkboxes: [3],
+      radios: 4,
+      date: new Date().getTime(),
+      dateRange: {
+        from: new Date(2019, 5, 10).getTime(),
+        to: new Date(2019, 5, 25).getTime(),
+      },
+    });
   }
-
   onToggleInline() {
     this.isInline = !this.isInline;
   }
 
-  onSubmit(): void {}
+  onToggleDisable() {
+    this.form.enabled ? this.form.disable() : this.form.enable();
+  }
+
+  onSubmit(): void {
+    if (this.form.invalid) {
+      markFormGroupTouched(this.form);
+    }
+  }
+
+  onToggleSpinner(): void {
+    this.showSpinner = !this.showSpinner;
+  }
+
+  onError(): void {
+    this.notification.error('Oops! Something went wrong');
+  }
+
+  onSuccess(): void {
+    this.notification.success('Everything is fine!');
+  }
 }
