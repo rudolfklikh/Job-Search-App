@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import * as fromRoot from './store';
+import * as fromDictionaries from './store/dictionaries';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +11,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class AppComponent implements OnInit {
   title = 'job-search';
 
-  constructor() {}
+  constructor(private store: Store<fromRoot.State>) {}
   
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(new fromDictionaries.Read());
+  }
 }

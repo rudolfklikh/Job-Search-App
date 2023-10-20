@@ -17,6 +17,10 @@ import {
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import { NotificationModule } from './services';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { effects, reducers } from './store';
 
 const APP_DATE_FORMATS: MatDateFormats = {
   parse: {
@@ -41,7 +45,18 @@ const APP_DATE_FORMATS: MatDateFormats = {
     AngularFireStorageModule,
     BrowserAnimationsModule,
     MatNativeDateModule,
-    NotificationModule.forRoot()
+    NotificationModule.forRoot(),
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      },
+    }),
+    EffectsModule.forRoot(effects),
+    StoreDevtoolsModule.instrument({
+      maxAge: 50,
+      logOnly: process.env['NODE_ENV'] !== 'production',
+    }),
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
