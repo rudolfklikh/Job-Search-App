@@ -9,9 +9,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class AppComponent implements OnInit {
   title = 'job-search';
 
-  constructor(private afs: AngularFirestore) {}
+  constructor() {}
   
-  ngOnInit(): void {
-    this.afs.collection('test').snapshotChanges().subscribe(items => console.log(items.map(x => x.payload.doc.data()), '=> Data from FireBase'));
-  }
+  ngOnInit(): void {}
 }
