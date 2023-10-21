@@ -8,7 +8,6 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from './environments/environment';
-import { HeaderComponent } from './components';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatNativeDateModule,
@@ -21,6 +20,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { effects, reducers } from './store';
+import { HeaderComponent } from './components/header/header.component';
 
 const APP_DATE_FORMATS: MatDateFormats = {
   parse: {
