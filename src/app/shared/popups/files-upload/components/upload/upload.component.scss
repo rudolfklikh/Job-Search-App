@@ -1,0 +1,38 @@
+@import '../../../../../styles/colors';
+
+.upload {
+       
+    padding: 12px;
+    border-radius: 4px;
+    background: rgba(0,0,0, 0.05);
+    margin-top: 12px;
+
+    &__progress {
+        height: 10px;
+        width: 100%;
+        &::-webkit-progress-value {
+            transition: width 0.1s ease;
+        }
+    }
+
+    &__info{
+        display: flex;
+        justify-content: space-between;
+    }
+
+}
+
+.button {
+    display: inline-block;
+    margin: 2px 4px;
+    cursor: pointer;
+    transition: 0.25s;
+
+    &:hover {
+        transform: translate(1.1);
+    }
+}
+
+.app-a {
+    margin-right: 0;
+}
