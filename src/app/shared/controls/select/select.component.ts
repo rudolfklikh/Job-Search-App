@@ -20,7 +20,7 @@ import { ControlItem, Value } from '@app/models/frontend';
 })
 export class SelectComponent implements OnInit, ControlValueAccessor {
 
-  @Input() items: ControlItem[] = [];
+  @Input() items: ControlItem[] | undefined = [];
   @Input() placeholder!: string;
 
   @Output() changed = new EventEmitter<Value>();

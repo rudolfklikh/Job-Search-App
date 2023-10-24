@@ -12,11 +12,11 @@ import { AbstractControl } from '@angular/forms';
 export class FormFieldComponent implements OnInit {
   @Input() label!: string;
   @Input() required!: boolean;
-  @Input() control!: AbstractControl;
+  @Input() control!: AbstractControl | null;
   @Input() patternError!: string;
   @Input() isInline = true;
 
-  get hasError(): boolean {
+  get hasError(): boolean | null {
     return this.control && this.control.invalid && this.control.touched;
   }
 

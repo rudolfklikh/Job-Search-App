@@ -8,7 +8,7 @@ export const environment = {
             messagingSenderId: "170919612064",
             actionCodeSettings: {
             
-                url: 'http://localhost:4200/demo',
+                url: 'http://localhost:4200/profile/new',
                 handleCodeInApp: true
             }
     }
