@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NotificationService } from '@app/services';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { serverTimestamp } from 'firebase/firestore';
 
 import { Observable, from, of } from 'rxjs';
 import {
@@ -44,7 +45,8 @@ export class UserEffects {
             .pipe(
               take(1),
               map(
-                (user) => new fromActions.InitAuthorized(authState.uid, user || null)
+                (user) =>
+                  new fromActions.InitAuthorized(authState.uid, user || null)
               ),
               catchError((err) => of(new fromActions.InitError(err.message)))
             );
@@ -106,11 +108,16 @@ export class UserEffects {
         ).pipe(
           tap(() => {
             this.afAuth.currentUser.then((user) => {
-              user?.sendEmailVerification(environment.firebase.actionCodeSettings);
+              user?.sendEmailVerification(
+                environment.firebase.actionCodeSettings
+              );
               this.router.navigate(['/auth/email-confirm']);
-            })
+            });
           }),
-          map((signUpState) => new fromActions.SignUpEmailSuccess(signUpState.user?.uid)),
+          map(
+            (signUpState) =>
+              new fromActions.SignUpEmailSuccess(signUpState.user?.uid)
+          ),
           catchError((err) => {
             this.notification.error(err.message);
             return of(new fromActions.SignUpEmailError(err.message));
@@ -127,6 +134,43 @@ export class UserEffects {
         from(this.afAuth.signOut()).pipe(
           map(() => new fromActions.SignOutSuccess()),
           catchError((err) => of(new fromActions.SignOutError(err.message)))
+        )
+      )
+    );
+  });
+
+  create$: Observable<Action> = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromActions.Types.CREATE),
+      map((action: fromActions.Create) => action.user),
+      withLatestFrom(this.afAuth.authState.pipe(take(1))),
+      map(([user, state]) => {
+        return {
+          ...user,
+          uid: state?.uid || '',
+          email: state?.email || '',
+          created: serverTimestamp(),
+        };
+      }),
+      switchMap((user: User) =>
+        from(this.afs.collection('users').doc(user.uid as string).set(user)).pipe(
+          tap(() => this.router.navigate(['/profile', user.uid])),
+          map(() => new fromActions.CreateSuccess(user)),
+          catchError((err) => of(new fromActions.CreateError(err.message)))
+        )
+      )
+    );
+  });
+
+  update$: Observable<Action> = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromActions.Types.UPDATE),
+      map((action: fromActions.Update) => action.user),
+      switchMap((user) =>
+        from(this.afs.collection('users').doc(user.uid as string).set(user)).pipe(
+          tap(() => this.router.navigate(['/profile', user.uid])),
+          map(() => new fromActions.UpdateSuccess(user)),
+          catchError((err) => of(new fromActions.UpdateError(err.message)))
         )
       )
     );

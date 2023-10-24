@@ -64,7 +64,7 @@ export class DictionariesEffects {
             name: country.name,
             icon: {
               src: null,
-              cssClass: `fflag fflag-${country.code.toUpperCase()}`
+              cssClass: `fflag fflag-${country.code.toUpperCase()} ff-sm`
             }
           })))
         ).pipe(

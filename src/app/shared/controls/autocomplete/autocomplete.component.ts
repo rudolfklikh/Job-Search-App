@@ -51,13 +51,13 @@ import { Value } from '../date-range/date-range.component';
 export class AutocompleteComponent
   implements OnInit, OnDestroy, ControlValueAccessor
 {
-  @Input() items!: ControlItem[];
+  @Input() items!: ControlItem[] | undefined;
   @Input() placeholder!: string;
 
   @Output() changed = new EventEmitter<Value>();
 
   formControl = new FormControl();
-  options$!: Observable<ControlItem[]>;
+  options$!: Observable<ControlItem[] | undefined>;
 
   private destroy = new Subject<any>();
 
@@ -68,7 +68,7 @@ export class AutocompleteComponent
       startWith(''),
       filter((value) => typeof value === 'string' || typeof value === 'object'),
       map((value) => (typeof value === 'string' ? value : value.label)),
-      map((label) => (label ? this.filter(label) : this.items.slice()))
+      map((label) => (label ? this.filter(label) : this.items?.slice()))
     );
 
     this.formControl.valueChanges
@@ -85,9 +85,9 @@ export class AutocompleteComponent
     this.destroy.complete();
   }
 
-  private filter(value: string): ControlItem[] {
+  private filter(value: string): ControlItem[] | undefined {
     const filterValue = value.toLowerCase();
-    return this.items.filter((item) =>
+    return this.items?.filter((item) =>
       item.label.toLowerCase().includes(filterValue)
     );
   }
@@ -96,7 +96,7 @@ export class AutocompleteComponent
   private propagateTouched: any = () => {};
 
   writeValue(value: Value): void {
-    const selectedOption = this.items.find((item) => (item.value as unknown as Value) === value);
+    const selectedOption = this.items?.find((item) => (item.value as unknown as Value) === value);
     this.formControl.setValue(selectedOption);
   }
 
