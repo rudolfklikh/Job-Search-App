@@ -18,6 +18,7 @@ import {
   SelectComponent,
 } from '@app/shared/controls';
 import { SpinnerComponent } from '@app/shared/indicators';
+import { FilesUploadModule } from '@app/shared/popups';
 
 @NgModule({
   declarations: [SharedComponent],
@@ -25,6 +26,7 @@ import { SpinnerComponent } from '@app/shared/indicators';
     CommonModule,
     SharedRoutingModule,
     ReactiveFormsModule,
+    FilesUploadModule,
     ButtonComponent,
     FormFieldComponent,
     InputComponent,
