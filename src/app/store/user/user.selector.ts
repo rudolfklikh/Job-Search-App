@@ -9,6 +9,11 @@ export const getUser = createSelector(
     (state) => state.entity
 );
 
+export const getRoleID = createSelector(
+    getUser,
+    (state) => state?.roleId
+);
+
 export const getLoading = createSelector(
     getUserState,
     (state) => state.loading
