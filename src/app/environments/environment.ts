@@ -7,8 +7,7 @@ export const environment = {
             storageBucket: "jobsearch-portfolioapp.appspot.com",
             messagingSenderId: "170919612064",
             actionCodeSettings: {
-            
-                url: 'http://localhost:4200/profile/new',
+                url: 'https://jobsearch-portfolioapp.web.app/profile/new',
                 handleCodeInApp: true
             }
     }
